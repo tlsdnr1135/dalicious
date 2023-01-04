@@ -1,9 +1,6 @@
 package com.dalicious.dalicious.domain.response;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -24,5 +21,13 @@ public class ArticleResponseDTO {
 
     private String content_html; //본문
 
-
+    @Builder
+    public ArticleResponseDTO(Long article_id, Timestamp created_datetime, Boolean is_pinned, Integer view_count, String title, String content_html) {
+        this.article_id = article_id;
+        this.created_datetime = created_datetime;
+        this.is_pinned = is_pinned;
+        this.view_count = view_count;
+        this.title = title;
+        this.content_html = content_html;
+    }
 }

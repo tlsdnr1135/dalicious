@@ -14,4 +14,10 @@ public class ArticleRequestDTO {
 
     private String content;
 
+    @Builder
+    public ArticleRequestDTO(Integer boardId, String title, String content) {
+        this.boardId = boardId;
+        this.title = title;
+        this.content = content;
+    }
 }

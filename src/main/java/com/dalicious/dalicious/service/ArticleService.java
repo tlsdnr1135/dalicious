@@ -21,6 +21,7 @@ public class ArticleService {
 
     //게시글 생성
     public Long saveArticle(ArticleRequestDTO articleRequestDTO){
+        //파라미터에다 직접 DTO를 바인딩 해도 상관이 없을까?
         //TODO 엔티티쪽으로 빼기
         cms__article article = cms__article.builder()
                 .board_id(articleRequestDTO.getBoardId())

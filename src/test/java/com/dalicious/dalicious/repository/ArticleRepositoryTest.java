@@ -65,7 +65,7 @@ public class ArticleRepositoryTest {
         System.out.println(article.getArticle_id());
 
         //then
-        assertTrue(article.getArticle_id().describeConstable().isPresent());
+        assertTrue(article.getArticle_id() != 0);
     }
 
     @Test
