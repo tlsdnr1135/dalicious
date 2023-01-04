@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dalicious.dalicious.repository.ArticleRepository">
+
+    <!-- 게시글 목록 조회 -->
+    <select id="findAll" resultType="com.dalicious.dalicious.domain.response.ArticleResponseDTO">
+        SELECT * FROM cms__article;
+    </select>
+
+    <!-- 게시글 상세 조회 -->
+    <select id="findById" parameterType="long" resultType="com.dalicious.dalicious.domain.response.ArticleResponseDTO">
+        SELECT * FROM cms__article WHERE article_id = #{id}
+    </select>
+
+    <!-- 게시판 -> 게시글 조회(단어) -->
+    <select id="findByStr" parameterType="String" resultType="com.dalicious.dalicious.domain.response.ArticleResponseDTO">
+        SELECT * FROM cms__article WHERE board_id IN (SELECT board_id FROM cms__board WHERE name_ko LIKE CONCAT ('%', #{title}, '%'))
+    </select>
+
+    <!-- 특정기간 게시물 조회 (시간) -->
+    <select id="findByDate" parameterType="java.sql.Timestamp" resultType="com.dalicious.dalicious.domain.response.ArticleResponseDTO">
+        SELECT * FROM cms__article WHERE created_datetime BETWEEN #{start} AND #{end}
+    </select>
+
+    <!-- 게시글 조회수 -->
+    <update id="viewArticle" parameterType="long">
+        UPDATE cms__article SET view_count = view_count + 1 WHERE article_id = #{id}
+    </update>
+
+    <!-- 게시글 생성 -->
+    <insert id="saveArticle" parameterType="com.dalicious.dalicious.domain.cms__article" useGeneratedKeys="true" keyProperty="article_id">
+        INSERT cms__article (board_id, created_datetime, is_pinned, view_count, title, content_html, content_string)
+            VALUES (#{board_id}, now(), false, 0, #{title}, #{content_html}, #{content_string})
+    </insert>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM cms__article WHERE article_id = #{id}
+    </delete>
+
+</mapper>
